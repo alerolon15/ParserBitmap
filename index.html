@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>BitMap Parser</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/alphabet.js"></script>
+  </head>
+  <body>
+    <div style="width:70%; margin: 0 auto; margin-top: -100px;">
+      <canvas id="myCanvas"></canvas>
+    </div>
+    <div class="container text-center" style="margin-top:-200px;">
+      <div class="row">
+        <div class="col-xs-12 col-md-4" style="margin: 0 auto;float: none;">
+            <h2>Agregue el Bitmap</h2>
+            <label for="inputEmail" class="sr-only">Bitmap</label>
+            <input type="text" id="bitMap" class="form-control" placeholder="Ej: B23A80012AE0941A" required="" autofocus="" name="bitm" value="" >
+            <form>
+              <input type="radio" name="tipoBitMap" id="tipoBitMap" value="1" checked> Bitmap Primario
+              <input type="radio" name="tipoBitMap" id="tipoBitMap" value="2"> Bitmap Secundario<br>
+            </form>
+            <button class="btn btn-lg btn-primary btn-block" onclick="parsearHexa()">Parsear</button>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+      <div class="col-xs-12">
+        <h2>bitmap en binario</h2>
+        <div id="bitmapBinario"></div>
+      </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-xs-6">
+          <h2>Existen</h2>
+          <div id="Existe"></div>
+        </div>
+        <div class="col-xs-6">
+          <h2>No Existen</h2>
+          <div id="noExiste"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+      };
+      function parsearHexa() {
+        var inner1 = "";
+        var inner2 = "";
+        var bitMapVal = document.getElementById("bitMap").value;
+        var aux3 = "";
+        for(i=0; i<bitMapVal.length; i++) {
+            var aux = bitMapVal[i];
+            var aux1 = parseInt(aux, 16).toString(2);
+                aux1 = pad(aux1, 4);
+            var aux3 = aux3 + aux1;
+        };
+        var radio = document.getElementsByName('tipoBitMap');
+        if (radio[0].checked) { index = 0; } else { var index = 64; };
+        var result = aux3;
+        for(i=0; i<result.length; i++) {
+          index = index + 1;
+          if (result.charAt(i) == "1") {
+            var CampoSi = "F#" + index + ", ";
+            var inner1 = inner1 + CampoSi;
+          }else {
+            var campoNo = "F#" + index + ", ";
+            var inner2 = inner2 + campoNo;
+          }
+          document.getElementById('bitmapBinario').innerHTML = result;
+          document.getElementById('Existe').innerHTML = inner1;
+          document.getElementById('noExiste').innerHTML = inner2;
+        };
+      };
+    </script>
+
+
+    <script type="text/javascript" src="http://s3.amazonaws.com/codecademy-content/courses/hour-of-code/js/bubbles.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.js"></script>
+  </body>
+</html>
